@@ -1,26 +1,68 @@
-const getTodos = (req, res) => {
+const Todo = require("../Models/schema.js");
+
+const getTodos = async (req, res) => {
   // Logic to get all to-dos
-  res.send('Get all to-dos');
+  try {
+    const todo = await Todo.find({});
+    res.status(200).json({ todo });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
-const getTodoById = (req, res) => {
+const getTodoById = async (req, res) => {
   // Logic to get a to-do by ID
-  res.send(`Get to-do with ID ${req.params.id}`);
+  try {
+    const { id: todoId } = req.params;
+    const todo = await Todo.findOne({ _id: todoId });
+    if (!todo) {
+      return res.status(404).json({ msg: `No task with id : ${todoId}` });
+    }
+    res.status(200).json({ todo });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
-const createTodo = (req, res) => {
+const createTodo = async (req, res) => {
   // Logic to create a new to-do
-  res.send('Create a new to-do');
+  try {
+    const todo = await Todo.create(req.body);
+    res.status(201).json({ todo });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
-const updateTodo = (req, res) => {
+const updateTodo = async (req, res) => {
   // Logic to update an existing to-do
-  res.send(`Update to-do with ID ${req.params.id}`);
+  try {
+    const { id: todoID } = req.params;
+    const todo = await Todo.findOneAndUpdate({ _id: todoID }, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!todo) {
+      res.status(404).json({ msg: `No task with id : ${todoID}` });
+    }
+    res.status(200).json({ todo });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
-const deleteTodo = (req, res) => {
+const deleteTodo = async (req, res) => {
   // Logic to delete a to-do
-  res.send(`Delete to-do with ID ${req.params.id}`);
+  try {
+    const { id: todoId } = req.params;
+    const todo = await Todo.findOneAndDelete({ _id: todoId });
+    if (!todo) {
+      return res.status(404).json({ msg: `No task with id : ${todoId}` });
+    }
+    res.status(200).json({ todo });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 module.exports = {
@@ -28,5 +70,5 @@ module.exports = {
   createTodo,
   updateTodo,
   deleteTodo,
-  getTodoById
+  getTodoById,
 };

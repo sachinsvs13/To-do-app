@@ -19,7 +19,7 @@ router.get('/:id',getTodoById);
 router.post('/',createTodo);
 
 // update To do list
-router.put('/:id',updateTodo);
+router.patch('/:id',updateTodo);
 
 // delete To do list
 router.delete('/:id',deleteTodo);
