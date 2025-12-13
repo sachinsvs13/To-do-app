@@ -1,0 +1,23 @@
+main {
+  flex: 1 1 auto;
+}
+
+.setting {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+}
+.left-setting {
+  display: flex;
+  align-items: center;
+}
+
+.top {
+  color: rgb(136, 136, 136);
+  display: flex;
+  margin-left: 1rem;
+  align-items: center;
+  font-size: 1.2rem;
+  border: none;
+  background-color: rgba(245, 245, 245, 0.87);
+}
