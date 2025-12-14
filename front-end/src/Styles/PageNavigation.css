@@ -1,10 +1,11 @@
 .side-component {
-
   background-color: white;
   flex: 0 1 20%;
+  height: 94vh;
+
 }
 .top-icon {
-  padding: 2rem 0 1.5rem 2.5rem;
+  padding: 1.9rem 0 1.5rem 2.2rem;
   cursor: pointer;
 }
 

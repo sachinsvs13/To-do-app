@@ -2,6 +2,11 @@ import { FaGripLines } from "react-icons/fa";
 import { IoSunnyOutline } from "react-icons/io5";
 import "../Styles/PageNavigation.css";
 import { useState } from "react";
+import { FaRegStar } from "react-icons/fa";
+import { CiCalendarDate } from "react-icons/ci";
+import { BiTask } from "react-icons/bi";
+
+
 
 export default function PagesNavigation() {
   const [IsActive, setIsActive] = useState(true);
@@ -20,16 +25,16 @@ export default function PagesNavigation() {
               My Day
             </li>
             <li className="items">
-              <IoSunnyOutline className="icon" />
-              My Day
+              <FaRegStar className="icon" />
+              Important
             </li>
             <li className="items">
-              <IoSunnyOutline className="icon" />
-              My Day
+              <CiCalendarDate className="icon" />
+              Planned
             </li>
             <li className="items">
-              <IoSunnyOutline className="icon" />
-              My Day
+              <BiTask className="icon" />
+              Task
             </li>
           </ul>
         </div>

@@ -4,8 +4,11 @@
     font-weight: 400;
     color:  #242424;
     background-color: rgba(245, 245, 245, 0.87);
+
   }
 
-body{
-  margin: 0
+html,body{
+  margin: 0;
+  padding : 0;
+
 }

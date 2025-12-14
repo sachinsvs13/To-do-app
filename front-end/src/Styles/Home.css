@@ -2,17 +2,18 @@ main {
   flex: 1 1 auto;
 }
 
-.setting {
+.setting-container {
   display: flex;
   justify-content: space-between;
   margin-top: 0.3rem;
 }
-.left-setting {
+
+.setting {
   display: flex;
   align-items: center;
 }
 
-.top {
+.options {
   color: rgb(136, 136, 136);
   display: flex;
   margin-left: 1rem;
@@ -20,4 +21,52 @@ main {
   font-size: 1.2rem;
   border: none;
   background-color: rgba(245, 245, 245, 0.87);
+  cursor : pointer;
+}
+
+.task-container{
+  padding: 1.2rem 2rem 0 1.2rem;
+  flex-direction: column;
+  display: flex;
+}
+
+.task-input{
+  padding: 1rem 0.5rem 1rem 3rem;
+  flex: 1 1 auto;
+  outline: none;
+  border : none;
+  box-shadow: 0px 0px 1px 0px rgb(0, 0, 0);
+}
+
+.task-input::placeholder{
+  color: #009fdf;
+}
+
+.task-input:focus::placeholder{
+  color: #3d3d3d;
+  transition: 0.5s;
+}
+
+.task-options-container{
+  display: flex;
+  justify-content: space-between;
+  padding : 0.5rem 0;
+  margin: 0;
+  border-top: 1px solid #e4e4e4;
+  box-shadow: 0px 0px 1px 0px rgb(0, 0, 0);
+
+}
+
+.task-options{
+  display: flex;
+  align-items: center;
+}
+
+.add-btn{
+  margin-right: 1rem;
+  color: rgba(145, 145, 145, 0.87);
+  border:none;
+  box-shadow: 0px 0px 1px 0px rgb(0, 0, 0);
+  padding : 0.3rem 0.5rem;
+  cursor :not-allowed;
 }
