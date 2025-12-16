@@ -6,12 +6,51 @@ import { BsSortAlphaDown } from "react-icons/bs";
 import { CiCalendarDate } from "react-icons/ci";
 import { CiBellOn } from "react-icons/ci";
 import { IoRepeatOutline } from "react-icons/io5";
+import axios from "axios";
+import { useState } from "react";
+import { FaRegCircle } from "react-icons/fa";
+import { FaRegCheckCircle } from "react-icons/fa";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 export default function Home() {
+  const [allTodo, setAllTodo] = useState([]);
+  const [createTodo, setCreateTodo] = useState("");
+  const [value, onChange] = useState(new Date())
+
+  const ShowAllToDo = () => {
+    axios
+      .get("http://localhost:3000/api/v1/todo")
+      .then((res) => setAllTodo(res.data.todo))
+      .catch((err) => console.log(err));
+  };
+
+  const handleCreateTodo = (e) => {
+    e.preventDefault;
+    axios
+      .post("http://localhost:3000/api/v1/todo", {
+        name: createTodo,
+      })
+      .then(() => {
+        setCreateTodo('');
+        ShowAllToDo()
+      });
+  };
+
+  const date = new Date
+
+  console.log(date);
+  
+  const handleCalender = () =>{
+    <Calendar onChange={onChange} value={value}/>
+  }
+
+
   return (
     <main>
       <div className="setting-container">
         <div className="setting">
+          {ShowAllToDo()}
           <h3 className="options">
             <IoSunnyOutline className="icon" />
             My Day
@@ -26,31 +65,62 @@ export default function Home() {
           </button>
         </div>
         <div className="setting">
-          <button className="options" style={{marginRight : "1rem"}}>
+          <button className="options" style={{ marginRight: "1rem" }}>
             <BsSortAlphaDown className="icon" />
             Sort
           </button>
         </div>
       </div>
       <div className="task-container">
-        <input type="text" placeholder="Add a task" className="task-input" />
+        <form onSubmit={handleCreateTodo} className="task-input-container">
+          <input
+            type="text"
+            placeholder="Add a task"
+            className="task-input"
+            value={createTodo}
+            onChange={(e) => setCreateTodo(e.target.value)}
+          />
+        </form>
         <div className="task-options-container">
           <div className="task-options">
-            <button className="options" style={{color : 'black'}}>
+            <button className="options" style={{ color: "black" }}>
               <CiCalendarDate />
             </button>
-            <button className="options" style={{color : 'black'}}>
+            <button className="options" style={{ color: "black" }}>
               <CiBellOn />
             </button>
-            <button className="options" style={{color : 'black'}}>
+            <button className="options" style={{ color: "black" }}>
               <IoRepeatOutline />
             </button>
           </div>
           <div className="task-options">
-            <button className="add-btn">Add</button>
+            <button className={`${createTodo.length > 0 ? 'add-btn' : 'add-btn-null'}`}>Add</button>
           </div>
         </div>
       </div>
+      <ul className="todo-list-container">
+        {allTodo.map((item, index) => (
+          <div className="todo-list" key={index}>
+            <div>
+              <FaRegCircle className="circle-icon" />
+            </div>
+            <div>
+              <li key={index} className="todo">
+                {item.name}
+              </li>
+              <button className="todo-btn">
+                Tasks <span className="dot"></span>
+                <CiCalendarDate className="todo-option-btn" /> Today
+                <span className="dot"></span>
+                <IoRepeatOutline className="todo-option-btn" />
+                <span className="dot"></span>
+                <CiBellOn className="todo-option-btn" />
+                Today
+              </button>
+            </div>
+          </div>
+        ))}
+      </ul>
     </main>
   );
 }
