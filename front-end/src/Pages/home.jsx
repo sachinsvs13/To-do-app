@@ -10,13 +10,18 @@ import axios from "axios";
 import { useState } from "react";
 import { FaRegCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { CgCalendarToday } from "react-icons/cg";
+import { IoMdCalendar } from "react-icons/io";
+import { TbCalendarPause } from "react-icons/tb";
+import { IoCalendarClearOutline } from "react-icons/io5";
 
 export default function Home() {
   const [allTodo, setAllTodo] = useState([]);
   const [createTodo, setCreateTodo] = useState("");
-  const [value, onChange] = useState(new Date())
+  const [calendarActive, serCalendarActive] = useState(false);
+  const [reminderActive, serReminderActive] = useState(false);
 
   const ShowAllToDo = () => {
     axios
@@ -32,19 +37,22 @@ export default function Home() {
         name: createTodo,
       })
       .then(() => {
-        setCreateTodo('');
-        ShowAllToDo()
+        setCreateTodo("");
+        ShowAllToDo();
       });
   };
 
-  const date = new Date
+  const date = new Date();
 
   console.log(date);
-  
-  const handleCalender = () =>{
-    <Calendar onChange={onChange} value={value}/>
-  }
 
+  const handleCalendarActive = () => {
+    serCalendarActive((prev) => !prev);
+  };
+
+  const handleReminderActive = () => {
+    serReminderActive((prev) => !prev);
+  };
 
   return (
     <main>
@@ -83,18 +91,64 @@ export default function Home() {
         </form>
         <div className="task-options-container">
           <div className="task-options">
-            <button className="options" style={{ color: "black" }}>
+            <button
+              className="options"
+              style={{ color: "black" }}
+              onClick={handleCalendarActive}
+            >
               <CiCalendarDate />
             </button>
-            <button className="options" style={{ color: "black" }}>
+            {calendarActive ? (
+              <div className="sub-options">
+                <h5>Due</h5>
+                <button className="sub-options-items">
+                  <CgCalendarToday className="icon" /> Today
+                </button>
+                <button className="sub-options-items">
+                  <IoMdCalendar className="icon" /> Tomorrow
+                </button>
+                <button className="sub-options-items">
+                  <TbCalendarPause className="icon" /> Next Week
+                </button>
+                <i style={{borderTop : '1px solid #9a9a9a', margin : '0.2rem 0'}}></i>
+                <button className="sub-options-items" style={{margin : '0.2rem 0',  paddingTop : '1rem'}}>
+                  <IoCalendarClearOutline  className="icon" /> Pick a Date
+                </button>
+              </div>
+            ) : null}
+            <button className="options" style={{ color: "black" }} onClick={handleReminderActive}>
               <CiBellOn />
             </button>
+            {reminderActive ? (
+              <div className="sub-options">
+                <h5>Due</h5>
+                <button className="sub-options-items">
+                  <CgCalendarToday className="icon" /> Today
+                </button>
+                <button className="sub-options-items">
+                  <IoMdCalendar className="icon" /> Tomorrow
+                </button>
+                <button className="sub-options-items">
+                  <TbCalendarPause className="icon" /> Next Week
+                </button>
+                <i style={{borderTop : '1px solid #9a9a9a', margin : '0.2rem 0'}}></i>
+                <button className="sub-options-items" style={{margin : '0.2rem 0',  paddingTop : '1rem'}}>
+                  <IoCalendarClearOutline  className="icon" /> Pick a Date
+                </button>
+              </div>
+            ) : null}
             <button className="options" style={{ color: "black" }}>
               <IoRepeatOutline />
             </button>
           </div>
           <div className="task-options">
-            <button className={`${createTodo.length > 0 ? 'add-btn' : 'add-btn-null'}`}>Add</button>
+            <button
+              className={`${
+                createTodo.length > 0 ? "add-btn" : "add-btn-null"
+              }`}
+            >
+              Add
+            </button>
           </div>
         </div>
       </div>
