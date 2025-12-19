@@ -16,12 +16,13 @@ import { CgCalendarToday } from "react-icons/cg";
 import { IoMdCalendar } from "react-icons/io";
 import { TbCalendarPause } from "react-icons/tb";
 import { IoCalendarClearOutline } from "react-icons/io5";
+import NavBar from "../Components/NavBar";
 
 export default function Home() {
   const [allTodo, setAllTodo] = useState([]);
   const [createTodo, setCreateTodo] = useState("");
-  const [calendarActive, serCalendarActive] = useState(false);
-  const [reminderActive, serReminderActive] = useState(false);
+  const [toggleActive, setToggleActive] = useState(false);
+  const [calenderActive, setCalenderActive] = useState(false);
 
   const ShowAllToDo = () => {
     axios
@@ -46,16 +47,20 @@ export default function Home() {
 
   console.log(date);
 
-  const handleCalendarActive = () => {
-    serCalendarActive((prev) => !prev);
+  const handleToggleActive = () => {
+    setToggleActive((prev) => !prev);
   };
-
-  const handleReminderActive = () => {
-    serReminderActive((prev) => !prev);
+  const handleCalenderActive = () => {
+    setCalenderActive((prev) => !prev);
   };
 
   return (
     <main>
+      {/* {
+        calenderNav.map((i,index) => (
+          <span key={index}>{i}</span>
+        ))
+      } */}
       <div className="setting-container">
         <div className="setting">
           {ShowAllToDo()}
@@ -94,48 +99,35 @@ export default function Home() {
             <button
               className="options"
               style={{ color: "black" }}
-              onClick={handleCalendarActive}
+              onClick={handleCalenderActive}
             >
               <CiCalendarDate />
             </button>
-            {calendarActive ? (
-              <div className="sub-options">
-                <h5>Due</h5>
-                <button className="sub-options-items">
-                  <CgCalendarToday className="icon" /> Today
-                </button>
-                <button className="sub-options-items">
-                  <IoMdCalendar className="icon" /> Tomorrow
-                </button>
-                <button className="sub-options-items">
-                  <TbCalendarPause className="icon" /> Next Week
-                </button>
-                <i style={{borderTop : '1px solid #9a9a9a', margin : '0.2rem 0'}}></i>
-                <button className="sub-options-items" style={{margin : '0.2rem 0',  paddingTop : '1rem'}}>
-                  <IoCalendarClearOutline  className="icon" /> Pick a Date
-                </button>
-              </div>
+            {calenderActive ? (
+              <NavBar
+                header="Due"
+                Nav={
+                  [{ name: "Today", icon: CgCalendarToday },
+                  { name: "Tomorrow", icon: IoMdCalendar },
+                  { name: "Next Week", icon: TbCalendarPause }]
+                }
+                footer="Pick a Date"
+                Icon={IoCalendarClearOutline}
+              />
             ) : null}
-            <button className="options" style={{ color: "black" }} onClick={handleReminderActive}>
+            <button
+              className="options"
+              style={{ color: "black" }}
+              onClick={handleToggleActive}
+            >
               <CiBellOn />
             </button>
-            {reminderActive ? (
-              <div className="sub-options">
-                <h5>Due</h5>
-                <button className="sub-options-items">
-                  <CgCalendarToday className="icon" /> Today
-                </button>
-                <button className="sub-options-items">
-                  <IoMdCalendar className="icon" /> Tomorrow
-                </button>
-                <button className="sub-options-items">
-                  <TbCalendarPause className="icon" /> Next Week
-                </button>
-                <i style={{borderTop : '1px solid #9a9a9a', margin : '0.2rem 0'}}></i>
-                <button className="sub-options-items" style={{margin : '0.2rem 0',  paddingTop : '1rem'}}>
-                  <IoCalendarClearOutline  className="icon" /> Pick a Date
-                </button>
-              </div>
+            {toggleActive ? (
+              <NavBar
+                header="Reminder"
+                Nav={["Later Today", "Tomorrow", "Next Week"]}
+                footer="Pick a Date & Time"
+              />
             ) : null}
             <button className="options" style={{ color: "black" }}>
               <IoRepeatOutline />
