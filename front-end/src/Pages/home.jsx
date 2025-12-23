@@ -16,13 +16,19 @@ import { CgCalendarToday } from "react-icons/cg";
 import { IoMdCalendar } from "react-icons/io";
 import { TbCalendarPause } from "react-icons/tb";
 import { IoCalendarClearOutline } from "react-icons/io5";
+import { MdDeleteOutline } from "react-icons/md";
 import NavBar from "../Components/NavBar";
 
 export default function Home() {
   const [allTodo, setAllTodo] = useState([]);
   const [createTodo, setCreateTodo] = useState("");
-  const [toggleActive, setToggleActive] = useState(false);
   const [calenderActive, setCalenderActive] = useState(false);
+  const [calenderValue, setCalenderValue] = useState("");
+  const [reminderActive, setReminderActive] = useState(false);
+  const [reminderValue, setReminderValue] = useState("");
+  const [repeatActive, setRepeatActive] = useState(false);
+  const [repeatValue, setRepeatValue] = useState("");
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const ShowAllToDo = () => {
     axios
@@ -43,24 +49,37 @@ export default function Home() {
       });
   };
 
-  const date = new Date();
+  const Today = (num) => dayNames[new Date().getDay() + num];
 
-  console.log(date);
-
-  const handleToggleActive = () => {
-    setToggleActive((prev) => !prev);
+  const handleToggleActive = (active) => {
+    active((prev) => !prev);
   };
-  const handleCalenderActive = () => {
-    setCalenderActive((prev) => !prev);
+
+  const handleCalenderClick = (e) => {
+    const value = e.currentTarget.value;
+    setCalenderValue(value);
+    setCalenderActive(false);
+  };
+
+  const handleReminderClick = (e) => {
+    const value = e.currentTarget.value;
+    setReminderValue(value);
+    setReminderActive(false);
+  };
+
+  const handleRepeatClick = (e) => {
+    const value = e.currentTarget.value;
+    setRepeatValue(value);
+    setRepeatActive(false);
+  };
+
+  const handleRemove = (value, active) => {
+    value("");
+    active(false);
   };
 
   return (
     <main>
-      {/* {
-        calenderNav.map((i,index) => (
-          <span key={index}>{i}</span>
-        ))
-      } */}
       <div className="setting-container">
         <div className="setting">
           {ShowAllToDo()}
@@ -97,41 +116,83 @@ export default function Home() {
         <div className="task-options-container">
           <div className="task-options">
             <button
-              className="options"
+              className={`${calenderValue ? "options-selected" : "options"} `}
               style={{ color: "black" }}
-              onClick={handleCalenderActive}
+              onClick={() => handleToggleActive(setCalenderActive)}
             >
               <CiCalendarDate />
+              <span className="option-selected-text">{calenderValue}</span>
             </button>
             {calenderActive ? (
               <NavBar
-                header="Due"
-                Nav={
-                  [{ name: "Today", icon: CgCalendarToday },
-                  { name: "Tomorrow", icon: IoMdCalendar },
-                  { name: "Next Week", icon: TbCalendarPause }]
+                value={calenderValue.length}
+                handleClick={handleCalenderClick}
+                handleRemove={() =>
+                  handleRemove(setCalenderValue, setCalenderActive)
                 }
-                footer="Pick a Date"
-                Icon={IoCalendarClearOutline}
+                header="Due"
+                Nav={[
+                  { name: "Today", icon: CgCalendarToday, day: Today(0) },
+                  { name: "Tomorrow", icon: IoMdCalendar, day: Today(1) },
+                  { name: "Next Week", icon: TbCalendarPause, day: Today(6) },
+                ]}
+                footer={["Pick a Date", "Remove Due date"]}
+                Icon={[IoCalendarClearOutline, MdDeleteOutline]}
               />
             ) : null}
             <button
-              className="options"
+              className={`${reminderValue ? "options-selected" : "options"} `}
               style={{ color: "black" }}
-              onClick={handleToggleActive}
+              onClick={() => handleToggleActive(setReminderActive)}
             >
               <CiBellOn />
+              <span className="option-selected-text">{reminderValue}</span>
             </button>
-            {toggleActive ? (
+            {reminderActive ? (
               <NavBar
+                value={reminderValue.length}
+                handleClick={handleReminderClick}
+                handleRemove={() =>
+                  handleRemove(setReminderValue, setReminderActive)
+                }
                 header="Reminder"
-                Nav={["Later Today", "Tomorrow", "Next Week"]}
-                footer="Pick a Date & Time"
+                Nav={[
+                  { name: "Later Today", icon: CgCalendarToday },
+                  { name: "Tomorrow", icon: IoMdCalendar },
+                  { name: "Next Week", icon: TbCalendarPause },
+                ]}
+                footer={["Pick a Date & Time", "Remove reminder"]}
+                Icon={[IoCalendarClearOutline, MdDeleteOutline]}
               />
             ) : null}
-            <button className="options" style={{ color: "black" }}>
+            <button
+              className={`${repeatValue ? "options-selected" : "options"} `}
+              style={{ color: "black" }}
+              onClick={() => handleToggleActive(setRepeatActive)}
+            >
               <IoRepeatOutline />
+              <span className="option-selected-text">{repeatValue}</span>
             </button>
+            {repeatActive ? (
+              <NavBar
+                value={repeatValue.length}
+                handleClick={handleRepeatClick}
+                handleRemove={() =>
+                  handleRemove(setRepeatValue, setRepeatActive)
+                }
+                header="Repeat"
+                Nav={[
+                  { name: "Daily", icon: CgCalendarToday },
+                  { name: "Weekdays", icon: IoMdCalendar },
+                  { name: "Weekly", icon: TbCalendarPause },
+                  { name: "Monthly", icon: TbCalendarPause },
+                  { name: "Yearly", icon: TbCalendarPause },
+                  { name: "Custom", icon: TbCalendarPause },
+                ]}
+                footer={["Customized", "Never repeat"]}
+                Icon={[IoCalendarClearOutline, MdDeleteOutline]}
+              />
+            ) : null}
           </div>
           <div className="task-options">
             <button
