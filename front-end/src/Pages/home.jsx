@@ -140,6 +140,7 @@ export default function Home() {
                 Icon={[IoCalendarClearOutline, MdDeleteOutline]}
               />
             ) : null}
+            
             <button
               className={`${reminderValue ? "options-selected" : "options"} `}
               style={{ color: "black" }}
@@ -199,6 +200,7 @@ export default function Home() {
               className={`${
                 createTodo.length > 0 ? "add-btn" : "add-btn-null"
               }`}
+              onClick={handleCreateTodo}
             >
               Add
             </button>
