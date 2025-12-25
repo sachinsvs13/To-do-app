@@ -156,10 +156,10 @@ main {
   transition: 0.2s ease-in-out;
 }
 
-.todo-list-container{
+/* .todo-list-container{
   overflow-y: scroll;
   scroll-behavior: smooth;
-}
+} */
 
 .todo-list {
   display: flex;
@@ -168,12 +168,18 @@ main {
   background-color: white;
   box-shadow: 0px 0px 1px 0px rgb(0, 0, 0);
   margin: 0.5rem 0;
+  justify-content: space-between;
+
 }
 
 .circle-icon{
   margin-right : 0.5rem;
   color: #31b3e6;
   cursor : pointer;
+}
+
+.todo-container{
+  flex-grow: 1;
 }
 
 .todo{
@@ -208,4 +214,18 @@ main {
   background-color: #000000;
   border-radius: 50%;
   margin-left: 0.5rem;
+}
+
+.star-btn-container{
+  padding-top : 0.4rem;
+  margin-right : 0.5rem
+}
+
+.star-btn{
+  margin: 0 auto;
+  color: #31b3e6;
+  cursor : pointer;
+  border : none;
+  font-size: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.87);
 }
