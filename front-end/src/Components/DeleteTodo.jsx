@@ -6,21 +6,34 @@ import { IoRepeatOutline } from "react-icons/io5";
 import { MdOutlineStarOutline } from "react-icons/md";
 import "../Styles/DeleteTodo.css";
 
-export default function DeleteTodo({ id,isActive }) {
-  const [showTodo, setShowTodo] = useState([]);
+export default function DeleteTodo({ id, isActive }) {
+  const [todo, setTodo] = useState([]);
 
-  
+  const handleNameChange = (e) => {
+    setTodo({ ...todo, name: e.target.value });
+  };
+
   const idTodo = id;
   useEffect(() => {
     axios
       .get(`http://localhost:3000/api/v1/todo/${idTodo}`)
       .then((res) => {
-        setShowTodo(res.data.todo);
+        setTodo(res.data.todo);
       })
       .catch((err) => console.error(err.message));
-  },[idTodo]);
+  }, [idTodo]);
 
-
+  const updateTodo = (id) => {
+    axios
+      .patch(`http://localhost:3000/api/v1/todo/${id}`, {
+        name: todo.name,
+        completed: todo.completed,
+      })
+      .then(() => console.log("success"))
+      .catch((err) => {
+        console.error("There was an error updating the task!", err.message);
+      });
+  };
   return (
     <div className="delete-container">
       {isActive ? (
@@ -30,24 +43,35 @@ export default function DeleteTodo({ id,isActive }) {
               <div>
                 <FaRegCircle className="circle-icon" />
               </div>
-              <div>
-                <li className="todo">{showTodo.name}</li>
-                <button className="todo-btn">
-                  Tasks <span className="dot"></span>
-                  <CiCalendarDate className="todo-option-btn" /> Today
-                  <span className="dot"></span>
-                  <IoRepeatOutline className="todo-option-btn" />
-                  <span className="dot"></span>
-                  <CiBellOn className="todo-option-btn" />
-                  Today
-                </button>
-                <div className="star-btn-container">
-                  <button className="star-btn">
-                    <MdOutlineStarOutline />
-                  </button>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  updateTodo(idTodo);
+                }}
+                className="edit-form"
+              >
+                <input
+                  type="text"
+                  value={todo.name}
+                  onChange={handleNameChange}
+                />
+              </form>
+              <div className="star-btn-container">
+                <div className="star-btn">
+                  <MdOutlineStarOutline />
                 </div>
               </div>
             </div>
+            <div className="todo-list">
+              <CiCalendarDate className="todo-option-btn" /> Add due date
+            </div>
+            <div className="todo-list">
+              <IoRepeatOutline className="todo-option-btn" /> Repeat
+            </div>
+            <div className="todo-list">
+              <CiBellOn className="todo-option-btn" /> Remind me
+            </div>
+            <div className="todo-btn"></div>
           </ul>
         </div>
       ) : null}
