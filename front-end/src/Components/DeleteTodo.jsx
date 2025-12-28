@@ -5,8 +5,9 @@ import { FaRegCircle } from "react-icons/fa";
 import { IoRepeatOutline } from "react-icons/io5";
 import { MdOutlineStarOutline } from "react-icons/md";
 import "../Styles/DeleteTodo.css";
+import TodoFunctions from "./todoFunctions";
 
-export default function DeleteTodo({ id, isActive }) {
+export default function DeleteTodo({ id, isActive, handleToggleActive }) {
   const [todo, setTodo] = useState([]);
 
   const handleNameChange = (e) => {
@@ -62,9 +63,11 @@ export default function DeleteTodo({ id, isActive }) {
                 </div>
               </div>
             </div>
-            <div className="todo-list">
-              <CiCalendarDate className="todo-option-btn" /> Add due date
-            </div>
+            <TodoFunctions
+              handleToggleActive={handleToggleActive}
+              classNameContainer="todo-list1"
+              className ='todo-options'
+            />
             <div className="todo-list">
               <IoRepeatOutline className="todo-option-btn" /> Repeat
             </div>

@@ -165,7 +165,9 @@ main {
   border-radius: 3px;
 }
 
-.todo-list:hover{
+
+
+.todo-list:hover {
   background-color: rgb(245, 245, 245);
 }
 

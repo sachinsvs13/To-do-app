@@ -96,7 +96,7 @@ export default function Home() {
             // All Todo list
           }
           <div className="task-options-container">
-            <TodoFunctions handleToggleActive={handleToggleActive} />
+            <TodoFunctions handleToggleActive={handleToggleActive} classNameContainer = 'task-options' className= 'options'/>
             <div className="task-options">
               <button
                 className={`${
@@ -153,7 +153,7 @@ export default function Home() {
           ))}
         </ul>
       </main>
-      <DeleteTodo id={id} isActive={isActive} />
+      <DeleteTodo id={id} isActive={isActive} handleToggleActive={handleToggleActive}/>
     </>
   );
 }
