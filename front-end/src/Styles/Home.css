@@ -152,6 +152,8 @@ main {
 .todo-list-container {
   /* overflow-y: scroll;
   scroll-behavior: smooth; */
+  height: 64vh;
+  overflow-y: scroll;
 }
 
 .todo-list {

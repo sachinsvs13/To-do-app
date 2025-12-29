@@ -109,7 +109,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
         <ul className="todo-list-container">
           {allTodo.map((item, index) => (
             <div className="todo-list" key={index}>
@@ -153,7 +152,7 @@ export default function Home() {
           ))}
         </ul>
       </main>
-      <DeleteTodo id={id} isActive={isActive} handleToggleActive={handleToggleActive}/>
+      <DeleteTodo id={id} isActive={isActive} handleToggleActive={handleToggleActive} isNot={() => setIsActive(false)} />
     </>
   );
 }
