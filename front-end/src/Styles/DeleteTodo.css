@@ -41,3 +41,20 @@
 .todo-options:hover {
   background-color: rgb(245, 245, 245);
 }
+
+.delete-container1{
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0.5rem 1rem 1rem;
+  border-top: 1px solid #9a9a9a;
+  margin: 0.5rem 1rem;
+}
+
+.delete-btn {
+  border: none;
+  background-color: rgb(245, 245, 245);
+  /* color : #4169E1; */
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+}

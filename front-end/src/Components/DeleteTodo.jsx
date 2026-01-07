@@ -7,8 +7,14 @@ import { MdOutlineStarOutline } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 import "../Styles/DeleteTodo.css";
 import TodoFunctions from "./todoFunctions";
+import { FaAngleDoubleLeft } from "react-icons/fa";
 
-export default function DeleteTodo({ id, isActive, handleToggleActive,isNot }) {
+export default function DeleteTodo({
+  id,
+  isActive,
+  handleToggleActive,
+  isNot,
+}) {
   const [todo, setTodo] = useState([]);
 
   const handleNameChange = (e) => {
@@ -84,10 +90,9 @@ export default function DeleteTodo({ id, isActive, handleToggleActive,isNot }) {
             />
           </div>
           <div className="delete-container1">
-            <i
-              style={{ borderTop: "1px solid #9a9a9a", margin: "0.2rem 0" }}
-            ></i>
-            <button className="delete-btn" onClick={isNot}>Delete Task</button>
+            <button className="delete-btn" onClick={isNot}>
+              <FaAngleDoubleLeft />
+            </button>
             <button className="delete-btn">
               <MdDeleteOutline onClick={() => deleteTodo(todo._id)} />
             </button>
