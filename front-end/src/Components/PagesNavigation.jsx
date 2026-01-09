@@ -5,8 +5,7 @@ import { useState } from "react";
 import { FaRegStar } from "react-icons/fa";
 import { CiCalendarDate } from "react-icons/ci";
 import { BiTask } from "react-icons/bi";
-
-
+import { Link } from "react-router-dom";
 
 export default function PagesNavigation() {
   const [IsActive, setIsActive] = useState(true);
@@ -19,24 +18,24 @@ export default function PagesNavigation() {
       {IsActive ? (
         <div>
           <FaGripLines className="top-icon" onClick={handleComponent} />
-          <ul className="list">
-            <li className="items">
+          <div className="list">
+            <Link to="/" className="items">
               <IoSunnyOutline className="icon" />
               My Day
-            </li>
-            <li className="items">
+            </Link>
+            <Link to="/important" className="items">
               <FaRegStar className="icon" />
               Important
-            </li>
-            <li className="items">
+            </Link>
+            <Link to="/planned" className="items">
               <CiCalendarDate className="icon" />
               Planned
-            </li>
-            <li className="items">
+            </Link>
+            <Link to="/tasks" className="items">
               <BiTask className="icon" />
               Task
-            </li>
-          </ul>
+            </Link>
+          </div>
         </div>
       ) : (
         <FaGripLines className="top-icon" onClick={handleComponent} />
