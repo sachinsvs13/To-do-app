@@ -23,6 +23,11 @@
   color: rgb(33, 33, 33);
 }
 
+.active {
+  background-color: #cef1ff;
+  font-weight: 600;
+}
+
 .icon {
   padding-right: 0.5rem;
 }
