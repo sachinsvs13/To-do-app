@@ -8,7 +8,7 @@ export default function Important() {
       <Header />
       <div className="side">
         <PagesNavigation />
-        <Home />
+        <Home settingColor = "#e14e4e"/>
       </div>
     </>
   );

@@ -8,7 +8,7 @@ export default function Planned() {
       <Header />
       <div className="side">
         <PagesNavigation />
-        <Home />
+        <Home settingColor = "#ac8d3f"/>
       </div>
     </>
   );

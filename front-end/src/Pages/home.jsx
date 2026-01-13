@@ -16,7 +16,7 @@ import { MdOutlineStarPurple500 } from "react-icons/md";
 import DeleteTodo from "../Components/DeleteTodo";
 import TodoFunctions from "../Components/todoFunctions";
 
-export default function Home() {
+export default function Home({settingColor}) {
   const [allTodo, setAllTodo] = useState([]);
   const [createTodo, setCreateTodo] = useState("");
   const [important, setImportant] = useState(false);
@@ -53,27 +53,27 @@ export default function Home() {
   return (
     <>
       <main>
-        <div className="setting-container">
-          <div className="setting">
+        <div className="setting-container" >
+          <div className="setting" >
             {ShowAllToDo()}
             {
               //top
             }
-            <h3 className="options">
+            <h3 className="options" style={{color : settingColor}}>
               <IoSunnyOutline className="icon" />
               My Day
             </h3>
-            <button className="options">
+            <button className="options" style={{color : settingColor}}>
               <LuLayoutGrid className="icon" />
               Grid
             </button>
-            <button className="options">
+            <button className="options" style={{color : settingColor}}>
               <CiCircleList className="icon" />
               List
             </button>
           </div>
-          <div className="setting">
-            <button className="options" style={{ marginRight: "1rem" }}>
+          <div className="setting" >
+            <button className="options" style={{ marginRight: "1rem",color : settingColor }}>
               <BsSortAlphaDown className="icon" />
               Sort
             </button>

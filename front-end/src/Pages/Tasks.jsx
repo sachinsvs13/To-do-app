@@ -8,7 +8,7 @@ export default function Tasks() {
       <Header />
       <div className="side">
         <PagesNavigation />
-        <Home />
+        <Home settingColor = "#4f55d3"/>
       </div>
     </>
   );
