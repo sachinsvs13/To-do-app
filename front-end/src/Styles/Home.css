@@ -156,6 +156,13 @@ main {
   overflow-y: scroll;
 }
 
+.todo-grid-container {
+  /* overflow-y: scroll;
+  scroll-behavior: smooth; */
+  height: 64vh;
+  overflow-y: scroll;
+}
+
 .todo-list {
   display: flex;
   align-items: center;
@@ -167,7 +174,14 @@ main {
   border-radius: 3px;
 }
 
-
+.todo-grid-header,.todo-grid{
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  background-color: white;
+  justify-content: space-between;
+  border-radius: 3px;
+}
 
 .todo-list:hover {
   background-color: rgb(245, 245, 245);
@@ -222,4 +236,17 @@ main {
   margin: 0 auto;
   color: #31b3e6;
   font-size: 1.5rem;
+}
+
+.todo-list-title{
+  flex-grow: 1;
+}
+
+.todo-list-due-date{
+  padding-right : 5rem;
+}
+
+.todo-list-importance{
+  flex-grow: 1;
+
 }

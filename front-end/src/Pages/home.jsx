@@ -16,12 +16,13 @@ import { MdOutlineStarPurple500 } from "react-icons/md";
 import DeleteTodo from "../Components/DeleteTodo";
 import TodoFunctions from "../Components/todoFunctions";
 
-export default function Home({settingColor}) {
+export default function Home({ settingColor }) {
   const [allTodo, setAllTodo] = useState([]);
   const [createTodo, setCreateTodo] = useState("");
   const [important, setImportant] = useState(false);
   const [id, setId] = useState("");
   const [isActive, setIsActive] = useState(false);
+  const [isGrid, setIsGrid] = useState(true);
 
   const ShowAllToDo = () => {
     axios
@@ -53,27 +54,30 @@ export default function Home({settingColor}) {
   return (
     <>
       <main>
-        <div className="setting-container" >
-          <div className="setting" >
+        <div className="setting-container">
+          <div className="setting">
             {ShowAllToDo()}
             {
               //top
             }
-            <h3 className="options" style={{color : settingColor}}>
+            <h3 className="options" style={{ color: settingColor }}>
               <IoSunnyOutline className="icon" />
               My Day
             </h3>
-            <button className="options" style={{color : settingColor}}>
+            <button className="options" style={{ color: settingColor }}>
               <LuLayoutGrid className="icon" />
               Grid
             </button>
-            <button className="options" style={{color : settingColor}}>
+            <button className="options" style={{ color: settingColor }}>
               <CiCircleList className="icon" />
               List
             </button>
           </div>
-          <div className="setting" >
-            <button className="options" style={{ marginRight: "1rem",color : settingColor }}>
+          <div className="setting">
+            <button
+              className="options"
+              style={{ marginRight: "1rem", color: settingColor }}
+            >
               <BsSortAlphaDown className="icon" />
               Sort
             </button>
@@ -96,7 +100,11 @@ export default function Home({settingColor}) {
             // All Todo list
           }
           <div className="task-options-container">
-            <TodoFunctions handleToggleActive={handleToggleActive} classNameContainer = 'task-options' className= 'options'/>
+            <TodoFunctions
+              handleToggleActive={handleToggleActive}
+              classNameContainer="task-options"
+              className="options"
+            />
             <div className="task-options">
               <button
                 className={`${
@@ -109,50 +117,96 @@ export default function Home({settingColor}) {
             </div>
           </div>
         </div>
-        <ul className="todo-list-container">
-          {allTodo.map((item, index) => (
-            <div className="todo-list" key={index}>
-              <div>
-                <FaRegCircle className="circle-icon" />
-              </div>
-              <div
-                className="todo-container"
-                onClick={() => {
-                  setId(item._id);
-                  setIsActive(true);
-                }}
-              >
-                <li key={index} className="todo">
-                  {item.name}
-                </li>
-                <div className="todo-btn">
-                  Tasks <span className="dot"></span>
-                  <CiCalendarDate className="todo-option-btn" /> Today
-                  <span className="dot"></span>
-                  <IoRepeatOutline className="todo-option-btn" />
-                  <span className="dot"></span>
-                  <CiBellOn className="todo-option-btn" />
-                  Today
-                </div>
-              </div>
-              <div className="star-btn-container">
-                <div className="star-btn">
-                  {important ? (
-                    <MdOutlineStarPurple500
-                      onClick={() => handleToggleActive(setImportant)}
-                    />
-                  ) : (
-                    <MdOutlineStarOutline
-                      onClick={() => handleToggleActive(setImportant)}
-                    />
-                  )}
-                </div>
-              </div>
+        {isGrid ? (
+          <ul className="todo-list-container">
+            <div className="todo-grid-header">
+              <spam className="todo-list-title">Title</spam>
+              <spam className="todo-list-due-date">Due Date</spam>
+              <spam className="todo-list-importance">Importance</spam>
             </div>
-          ))}
-        </ul>
+            {allTodo.map((item, index) => (
+              <div className="todo-grid" key={index}>
+                <div>
+                  <FaRegCircle className="circle-icon" />
+                </div>
+                <div
+                  className="todo-container"
+                  onClick={() => {
+                    setId(item._id);
+                    setIsActive(true);
+                  }}
+                >
+                  <li key={index} className="todo">
+                    {item.name}
+                  </li>
+                </div>
+                <div className="star-btn-container">
+                  <div className="star-btn">
+                    {important ? (
+                      <MdOutlineStarPurple500
+                        onClick={() => handleToggleActive(setImportant)}
+                      />
+                    ) : (
+                      <MdOutlineStarOutline
+                        onClick={() => handleToggleActive(setImportant)}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </ul>
+        ) : (
+          <ul className="todo-list-container">
+            {allTodo.map((item, index) => (
+              <div className="todo-list" key={index}>
+                <div>
+                  <FaRegCircle className="circle-icon" />
+                </div>
+                <div
+                  className="todo-container"
+                  onClick={() => {
+                    setId(item._id);
+                    setIsActive(true);
+                  }}
+                >
+                  <li key={index} className="todo">
+                    {item.name}
+                  </li>
+                  <div className="todo-btn">
+                    Tasks <span className="dot"></span>
+                    <CiCalendarDate className="todo-option-btn" /> Today
+                    <span className="dot"></span>
+                    <IoRepeatOutline className="todo-option-btn" />
+                    <span className="dot"></span>
+                    <CiBellOn className="todo-option-btn" />
+                    Today
+                  </div>
+                </div>
+                <div className="star-btn-container">
+                  <div className="star-btn">
+                    {important ? (
+                      <MdOutlineStarPurple500
+                        onClick={() => handleToggleActive(setImportant)}
+                      />
+                    ) : (
+                      <MdOutlineStarOutline
+                        onClick={() => handleToggleActive(setImportant)}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </ul>
+        )}
       </main>
-      <DeleteTodo id={id} isActive={isActive} handleToggleActive={handleToggleActive} isNot={() => setIsActive(false)} />
+      <DeleteTodo
+        id={id}
+        isActive={isActive}
+        handleToggleActive={handleToggleActive}
+        isNot={() => setIsActive(false)}
+      />
     </>
   );
 }
