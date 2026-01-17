@@ -13,13 +13,6 @@ main {
   align-items: center;
 }
 
-.task-container,
-.todo-list-container {
-  padding: 1.2rem 2rem 0 1.2rem;
-  flex-direction: column;
-  display: flex;
-}
-
 .task-input-container {
   display: flex;
 }
@@ -149,6 +142,13 @@ main {
   transition: 0.2s ease-in-out;
 }
 
+.task-container,
+.todo-list-container,
+.todo-grid-container {
+  padding: 1.2rem 2rem 0 1.2rem;
+  flex-direction: column;
+  display: flex;
+}
 .todo-list-container {
   /* overflow-y: scroll;
   scroll-behavior: smooth; */
@@ -174,7 +174,8 @@ main {
   border-radius: 3px;
 }
 
-.todo-grid-header,.todo-grid{
+.todo-grid-header,
+.todo-grid {
   display: flex;
   align-items: center;
   padding: 0.5rem 0.5rem 0.5rem 1rem;
@@ -198,11 +199,21 @@ main {
   cursor: pointer;
 }
 
+.todo-name-container {
+  flex: 1;
+  cursor: pointer;
+}
+
 .todo {
   /* must add custom list style  */
   list-style-type: none;
   font-size: 0.9rem;
   margin-left: 0.45rem;
+  margin-bottom: 0.1rem;
+  color: rgb(88, 88, 88);
+}
+.todo:hover {
+  text-decoration: underline;
 }
 
 .todo-btn {
@@ -232,21 +243,27 @@ main {
   margin-right: 0.5rem;
 }
 
+.star-btn-grid-container{
+  padding-top: 0.4rem;
+  margin-left: 1rem;
+  flex: 1 1 auto;
+}
+
 .star-btn {
   margin: 0 auto;
   color: #31b3e6;
   font-size: 1.5rem;
 }
 
-.todo-list-title{
+.todo-grid-title {
   flex-grow: 1;
+  margin-left: 2rem;
 }
 
-.todo-list-due-date{
-  padding-right : 5rem;
+.todo-grid-due-date {
+  padding-right: 5rem;
 }
 
-.todo-list-importance{
+.todo-grid-importance {
   flex-grow: 1;
-
 }

@@ -22,7 +22,7 @@ export default function Home({ settingColor }) {
   const [important, setImportant] = useState(false);
   const [id, setId] = useState("");
   const [isActive, setIsActive] = useState(false);
-  const [isGrid, setIsGrid] = useState(true);
+  const [isGrid, setIsGrid] = useState(false);
 
   const ShowAllToDo = () => {
     axios
@@ -64,11 +64,11 @@ export default function Home({ settingColor }) {
               <IoSunnyOutline className="icon" />
               My Day
             </h3>
-            <button className="options" style={{ color: settingColor }}>
+            <button className="options" style={{ color: settingColor }} onClick={() => setIsGrid(true)}>
               <LuLayoutGrid className="icon" />
               Grid
             </button>
-            <button className="options" style={{ color: settingColor }}>
+            <button className="options" style={{ color: settingColor }} onClick={() => setIsGrid(false)}>
               <CiCircleList className="icon" />
               List
             </button>
@@ -118,43 +118,48 @@ export default function Home({ settingColor }) {
           </div>
         </div>
         {isGrid ? (
-          <ul className="todo-list-container">
-            <div className="todo-grid-header">
-              <spam className="todo-list-title">Title</spam>
-              <spam className="todo-list-due-date">Due Date</spam>
-              <spam className="todo-list-importance">Importance</spam>
-            </div>
-            {allTodo.map((item, index) => (
-              <div className="todo-grid" key={index}>
-                <div>
-                  <FaRegCircle className="circle-icon" />
-                </div>
-                <div
-                  className="todo-container"
-                  onClick={() => {
-                    setId(item._id);
-                    setIsActive(true);
-                  }}
-                >
-                  <li key={index} className="todo">
-                    {item.name}
-                  </li>
-                </div>
-                <div className="star-btn-container">
-                  <div className="star-btn">
-                    {important ? (
-                      <MdOutlineStarPurple500
-                        onClick={() => handleToggleActive(setImportant)}
-                      />
-                    ) : (
-                      <MdOutlineStarOutline
-                        onClick={() => handleToggleActive(setImportant)}
-                      />
-                    )}
+          <ul className="todo-grid-container">
+            <div style={{"box-shadow": "0px 0px 1px 0px rgb(0, 0, 0)"}}>
+              <div className="todo-grid-header" style={{'font-size': '0.9rem'}}>
+                <spam className="todo-grid-title">Title</spam>
+                <spam className="todo-grid-due-date">Due Date</spam>
+                <spam className="todo-grid-importance">Importance</spam>
+              </div>
+              {allTodo.map((item, index) => (
+                <div className="todo-grid-header" key={index}>
+                  <div>
+                    <FaRegCircle className="circle-icon" />
+                  </div>
+                  <div
+                    className="todo-name-container"
+                    onClick={() => {
+                      setId(item._id);
+                      setIsActive(true);
+                    }}
+                  >
+                    <li key={index} className="todo">
+                      {item.name}
+                    </li>
+                  </div>
+                  <div className="todo-grid-due-date">
+                    <span style={{marginLeft : '0.2rem'}}>14-05-2025</span>
+                  </div>
+                  <div className="star-btn-grid-container">
+                    <div className="star-btn">
+                      {important ? (
+                        <MdOutlineStarPurple500
+                          onClick={() => handleToggleActive(setImportant)}
+                        />
+                      ) : (
+                        <MdOutlineStarOutline
+                          onClick={() => handleToggleActive(setImportant)}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </ul>
         ) : (
           <ul className="todo-list-container">
