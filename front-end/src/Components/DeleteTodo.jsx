@@ -4,6 +4,7 @@ import { CiBellOn, CiCalendarDate } from "react-icons/ci";
 import { FaRegCircle } from "react-icons/fa";
 import { IoRepeatOutline } from "react-icons/io5";
 import { MdOutlineStarOutline } from "react-icons/md";
+import { MdOutlineStarPurple500 } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 import "../Styles/DeleteTodo.css";
 import TodoFunctions from "./todoFunctions";
@@ -19,6 +20,10 @@ export default function DeleteTodo({
 
   const handleNameChange = (e) => {
     setTodo({ ...todo, name: e.target.value });
+  };
+
+  const handleImportantChange = () => {
+    setTodo({ ...todo, important: !todo.important });
   };
 
   const idTodo = id;
@@ -40,6 +45,7 @@ export default function DeleteTodo({
       .patch(`http://localhost:3000/api/v1/todo/${id}`, {
         name: todo.name,
         completed: todo.completed,
+        important: todo.important,
       })
       .then(() => console.log("success"))
       .catch((err) => {
@@ -76,12 +82,16 @@ export default function DeleteTodo({
                   value={todo.name}
                   onChange={handleNameChange}
                 />
-              </form>
-              <div className="star-btn-container">
-                <div className="star-btn">
-                  <MdOutlineStarOutline />
+                <div className="star-btn-container">
+                  <div className="star-btn">
+                    {todo.important ? (
+                      <MdOutlineStarPurple500 onClick={handleImportantChange} />
+                    ) : (
+                      <MdOutlineStarOutline onClick={handleImportantChange} />
+                    )}
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
             <TodoFunctions
               handleToggleActive={handleToggleActive}
