@@ -57,8 +57,13 @@ main {
   align-items: center;
   font-size: 1.2rem;
   border: none;
-  background-color: #faf9f8;
+  background-color: rgba(245, 245, 245, 0);
   cursor: pointer;
+}
+
+.active-btn {
+  border-bottom: 5px solid #31b3e6;
+  border-radius: 5rem;
 }
 
 .options-selected {

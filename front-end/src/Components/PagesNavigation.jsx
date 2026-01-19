@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 export default function PagesNavigation() {
   const [IsActive, setIsActive] = useState(true);
-  const [activeItem, setActiveItem] = useState(1);
+  const [activeItem, setActiveItem] = useState(false);
 
   const handleComponent = () => {
     setIsActive((prev) => !prev);
@@ -33,8 +33,8 @@ export default function PagesNavigation() {
               <Link
                 key={page.name}
                 to={page.path}
-                onClick={() => setActiveItem(page.id)}
-                className={`items ${activeItem === page.id ? 'active' : ''}`}
+                onClick={() => {setActiveItem(!activeItem)}}
+                className={`items ${activeItem ? "active-btn" : "" }`}
               >
                 {page.icon}
                 {page.name}

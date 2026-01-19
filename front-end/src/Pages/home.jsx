@@ -24,7 +24,6 @@ export default function Home({ settingColor }) {
   const [isGrid, setIsGrid] = useState(false);
 
   console.log(allTodo);
-  
 
   const ShowAllToDo = () => {
     axios
@@ -53,10 +52,10 @@ export default function Home({ settingColor }) {
     active((prev) => !prev);
   };
 
-  const handleImportantChange = (id) => {
+  const handleImportantChange = (id, item) => {
     axios
       .patch(`http://localhost:3000/api/v1/todo/${id}`, {
-        important: !allTodo.important,
+        important: item,
       })
       .then(() => {
         ShowAllToDo();
@@ -80,7 +79,7 @@ export default function Home({ settingColor }) {
               My Day
             </h3>
             <button
-              className="options"
+              className={`options ${isGrid ? "active-btn" : ""}`}
               style={{ color: settingColor }}
               onClick={() => setIsGrid(true)}
             >
@@ -88,7 +87,7 @@ export default function Home({ settingColor }) {
               Grid
             </button>
             <button
-              className="options"
+              className={`options ${isGrid ? "" : "active-btn"}`}
               style={{ color: settingColor }}
               onClick={() => setIsGrid(false)}
             >
@@ -170,21 +169,23 @@ export default function Home({ settingColor }) {
                     <div className="todo-grid-due-date">
                       <span style={{ marginLeft: "0.2rem" }}>14-05-2025</span>
                     </div>
-                    <form onSubmit={() => updateTodo(item._id)}>
-                      <div className="star-btn-container">
-                        <div className="star-btn">
-                          {item.important ? (
-                            <MdOutlineStarPurple500
-                              onClick={handleImportantChange}
-                            />
-                          ) : (
-                            <MdOutlineStarOutline
-                              onClick={handleImportantChange}
-                            />
-                          )}
-                        </div>
+                    <div className="star-btn-grid-container">
+                      <div className="star-btn">
+                        {item.important ? (
+                          <MdOutlineStarPurple500
+                            onClick={() =>
+                              handleImportantChange(item._id, false)
+                            }
+                          />
+                        ) : (
+                          <MdOutlineStarOutline
+                            onClick={() =>
+                              handleImportantChange(item._id, true)
+                            }
+                          />
+                        )}
                       </div>
-                    </form>
+                    </div>
                   </div>
                 </>
               ))}
@@ -218,15 +219,19 @@ export default function Home({ settingColor }) {
                       Today
                     </div>
                   </div>
-                    <div className="star-btn-container">
-                      <div className="star-btn">
-                        {item.important ? (
-                          <MdOutlineStarPurple500 onClick={() => handleImportantChange(item._id)} />
-                        ) : (
-                          <MdOutlineStarOutline onClick={() => handleImportantChange(item._id)} />
-                        )}
-                      </div>
+                  <div className="star-btn-container">
+                    <div className="star-btn">
+                      {item.important ? (
+                        <MdOutlineStarPurple500
+                          onClick={() => handleImportantChange(item._id, false)}
+                        />
+                      ) : (
+                        <MdOutlineStarOutline
+                          onClick={() => handleImportantChange(item._id, true)}
+                        />
+                      )}
                     </div>
+                  </div>
                 </div>
               </>
             ))}

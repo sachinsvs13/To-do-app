@@ -22,10 +22,6 @@ export default function DeleteTodo({
     setTodo({ ...todo, name: e.target.value });
   };
 
-  const handleImportantChange = () => {
-    setTodo({ ...todo, important: !todo.important });
-  };
-
   const idTodo = id;
 
   const fetchTodo = (id) => {
@@ -40,14 +36,14 @@ export default function DeleteTodo({
     fetchTodo(idTodo);
   }, [idTodo]);
 
-  const updateTodo = (id) => {
+  const updateTodo = (id, item) => {
     axios
       .patch(`http://localhost:3000/api/v1/todo/${id}`, {
         name: todo.name,
         completed: todo.completed,
-        important: todo.important,
+        important: item,
       })
-      .then(() => console.log("success"))
+      .then(() => fetchTodo(idTodo))
       .catch((err) => {
         console.error("There was an error updating the task!", err.message);
       });
@@ -82,16 +78,20 @@ export default function DeleteTodo({
                   value={todo.name}
                   onChange={handleNameChange}
                 />
-                <div className="star-btn-container">
-                  <div className="star-btn">
-                    {todo.important ? (
-                      <MdOutlineStarPurple500 onClick={handleImportantChange} />
-                    ) : (
-                      <MdOutlineStarOutline onClick={handleImportantChange} />
-                    )}
-                  </div>
-                </div>
               </form>
+              <div className="star-btn-container">
+                <div className="star-btn">
+                  {todo.important ? (
+                    <MdOutlineStarPurple500
+                      onClick={() => updateTodo(todo._id, false)}
+                    />
+                  ) : (
+                    <MdOutlineStarOutline
+                      onClick={() => updateTodo(todo._id, true)}
+                    />
+                  )}
+                </div>
+              </div>
             </div>
             <TodoFunctions
               handleToggleActive={handleToggleActive}
