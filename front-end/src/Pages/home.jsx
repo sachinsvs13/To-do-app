@@ -52,10 +52,11 @@ export default function Home({ settingColor }) {
     active((prev) => !prev);
   };
 
-  const handleImportantChange = (id, item) => {
+  const handleImportantChange = (id, item, item1) => {
     axios
       .patch(`http://localhost:3000/api/v1/todo/${id}`, {
         important: item,
+        completed: item1,
       })
       .then(() => {
         ShowAllToDo();
@@ -126,6 +127,8 @@ export default function Home({ settingColor }) {
               handleToggleActive={handleToggleActive}
               classNameContainer="task-options"
               className="options"
+              classNameSelected="options-selected"
+              optionsClassName="sub-options"
             />
             <div className="task-options">
               <button
@@ -149,11 +152,23 @@ export default function Home({ settingColor }) {
               </div>
               {allTodo.map((item, index) => (
                 <>
-                  {console.log(item.important)}
-
                   <div className="todo-grid-header" key={index}>
                     <div>
-                      <FaRegCircle className="circle-icon" />
+                      {item.completed ? (
+                        <FaRegCheckCircle
+                          className="circle-icon"
+                          onClick={() =>
+                            handleImportantChange(item._id, null, false)
+                          }
+                        />
+                      ) : (
+                        <FaRegCircle
+                          className="circle-icon"
+                          onClick={() =>
+                            handleImportantChange(item._id, null, true)
+                          }
+                        />
+                      )}
                     </div>
                     <div
                       className="todo-name-container"
@@ -197,7 +212,21 @@ export default function Home({ settingColor }) {
               <>
                 <div className="todo-list" key={index}>
                   <div>
-                    <FaRegCircle className="circle-icon" />
+                    {item.completed ? (
+                      <FaRegCheckCircle
+                        className="circle-icon"
+                        onClick={() =>
+                          handleImportantChange(item._id, null, false)
+                        }
+                      />
+                    ) : (
+                      <FaRegCircle
+                        className="circle-icon"
+                        onClick={() =>
+                          handleImportantChange(item._id, null, true)
+                        }
+                      />
+                    )}
                   </div>
                   <div
                     className="todo-container"

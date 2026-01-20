@@ -15,6 +15,8 @@ export default function TodoFunctions({
   handleToggleActive,
   classNameContainer,
   className,
+  optionsClassName,
+  classNameSelected,
 }) {
   const [calenderActive, setCalenderActive] = useState(false);
   const [calenderValue, setCalenderValue] = useState("");
@@ -52,8 +54,8 @@ export default function TodoFunctions({
   return (
     <div className={classNameContainer}>
       <button
-        className={`${calenderValue ? "options-selected" : className} `}
-        style={{ color: "black" }}
+        className={`${calenderValue ? classNameSelected : className} `}
+        style={{ color: calenderValue ? "rgb(0, 152, 194)" : "black" }}
         onClick={() => handleToggleActive(setCalenderActive)}
       >
         <CiCalendarDate />
@@ -72,12 +74,13 @@ export default function TodoFunctions({
           ]}
           footer={["Pick a Date", "Remove Due date"]}
           Icon={[IoCalendarClearOutline, MdDeleteOutline]}
+          optionsClassName={optionsClassName}
         />
       ) : null}
 
       <button
-        className={`${reminderValue ? "options-selected" : className} `}
-        style={{ color: "black" }}
+        className={`${reminderValue ? classNameSelected : className} `}
+        style={{ color: reminderValue ? "rgb(0, 152, 194)" : "black" }}
         onClick={() => handleToggleActive(setReminderActive)}
       >
         <CiBellOn />
@@ -96,11 +99,12 @@ export default function TodoFunctions({
           ]}
           footer={["Pick a Date & Time", "Remove reminder"]}
           Icon={[IoCalendarClearOutline, MdDeleteOutline]}
+          optionsClassName={optionsClassName}
         />
       ) : null}
       <button
-        className={`${repeatValue ? "options-selected" : className} `}
-        style={{ color: "black" }}
+        className={`${repeatValue ? classNameSelected : className} `}
+        style={{ color: repeatValue ? "rgb(0, 152, 194)" : "black" }}
         onClick={() => handleToggleActive(setRepeatActive)}
       >
         <IoRepeatOutline />
@@ -122,6 +126,7 @@ export default function TodoFunctions({
           ]}
           footer={["Customized", "Never repeat"]}
           Icon={[IoCalendarClearOutline, MdDeleteOutline]}
+          optionsClassName={optionsClassName}
         />
       ) : null}
     </div>

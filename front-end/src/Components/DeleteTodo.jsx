@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { CiBellOn, CiCalendarDate } from "react-icons/ci";
-import { FaRegCircle } from "react-icons/fa";
+import { FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
 import { IoRepeatOutline } from "react-icons/io5";
 import { MdOutlineStarOutline } from "react-icons/md";
 import { MdOutlineStarPurple500 } from "react-icons/md";
@@ -36,11 +36,11 @@ export default function DeleteTodo({
     fetchTodo(idTodo);
   }, [idTodo]);
 
-  const updateTodo = (id, item) => {
+  const updateTodo = (id, item,item1) => {
     axios
       .patch(`http://localhost:3000/api/v1/todo/${id}`, {
         name: todo.name,
-        completed: todo.completed,
+        completed: item1,
         important: item,
       })
       .then(() => fetchTodo(idTodo))
@@ -64,7 +64,17 @@ export default function DeleteTodo({
           <div className="todo-list-container">
             <div className="todo-list">
               <div>
-                <FaRegCircle className="circle-icon" />
+                {todo.completed ? (
+                  <FaRegCheckCircle
+                    className="circle-icon"
+                    onClick={() => updateTodo(todo._id, null, false)}
+                  />
+                ) : (
+                  <FaRegCircle
+                    className="circle-icon"
+                    onClick={() => updateTodo(todo._id, null, true)}
+                  />
+                )}
               </div>
               <form
                 onSubmit={(e) => {
@@ -77,6 +87,7 @@ export default function DeleteTodo({
                   type="text"
                   value={todo.name}
                   onChange={handleNameChange}
+                  className="edit-input"
                 />
               </form>
               <div className="star-btn-container">
@@ -97,6 +108,8 @@ export default function DeleteTodo({
               handleToggleActive={handleToggleActive}
               classNameContainer="todo-list1"
               className="todo-options"
+              classNameSelected="options-selected-todo"
+              optionsClassName="sub-options-delete"
             />
           </div>
           <div className="delete-container1">

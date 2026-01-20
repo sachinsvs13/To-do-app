@@ -6,6 +6,7 @@ export default function NavBar({
   handleClick,
   value,
   handleRemove,
+  optionsClassName,
 }) {
   const IconComponent = Icon[0];
   const DeleteIcon = Icon[1];
@@ -16,7 +17,7 @@ export default function NavBar({
     <>
       {
         <div className="sub-options-container">
-          <div className="sub-options">
+          <div className={optionsClassName}>
             <h5>{header}</h5>
             {Nav.map((items, index) => {
               const Icon = items.icon;
