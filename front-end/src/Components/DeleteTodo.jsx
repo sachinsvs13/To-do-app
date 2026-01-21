@@ -9,12 +9,14 @@ import { MdDeleteOutline } from "react-icons/md";
 import "../Styles/DeleteTodo.css";
 import TodoFunctions from "./todoFunctions";
 import { FaAngleDoubleLeft } from "react-icons/fa";
+import Home from "../Pages/home";
 
 export default function DeleteTodo({
   id,
   isActive,
   handleToggleActive,
   isNot,
+  ShowAllToDo,
 }) {
   const [todo, setTodo] = useState([]);
 
@@ -23,40 +25,41 @@ export default function DeleteTodo({
   };
 
   const idTodo = id;
-
   const fetchTodo = (id) => {
     axios
-      .get(`http://localhost:3000/api/v1/todo/${id}`)
-      .then((res) => {
-        setTodo(res.data.todo);
-      })
-      .catch((err) => console.error(err.message));
+    .get(`http://localhost:3000/api/v1/todo/${id}`)
+    .then((res) => {
+      setTodo(res.data.todo);
+    })
+    .catch((err) => console.error(err.message));
   };
   useEffect(() => {
     fetchTodo(idTodo);
   }, [idTodo]);
-
-  const updateTodo = (id, item,item1) => {
+  
+  const updateTodo = (id, item, item1) => {
     axios
-      .patch(`http://localhost:3000/api/v1/todo/${id}`, {
-        name: todo.name,
-        completed: item1,
-        important: item,
-      })
-      .then(() => fetchTodo(idTodo))
-      .catch((err) => {
-        console.error("There was an error updating the task!", err.message);
-      });
+    .patch(`http://localhost:3000/api/v1/todo/${id}`, {
+      name: todo.name,
+      completed: item1,
+      important: item,
+    })
+    .then(() => fetchTodo(idTodo))
+    .then(() => ShowAllToDo())
+    .catch((err) => {
+      console.error("There was an error updating the task!", err.message);
+    });
   };
   const deleteTodo = (id) => {
     axios
-      .delete(`http://localhost:3000/api/v1/todo/${id}`)
-      .then(() => fetchTodo(idTodo))
-      .catch((err) => {
-        console.error("There was an error deleting the task!", err.message);
-      });
+    .delete(`http://localhost:3000/api/v1/todo/${id}`)
+    .then(() => fetchTodo(idTodo))
+    .then(() => ShowAllToDo())
+    .catch((err) => {
+      console.error("There was an error deleting the task!", err.message);
+    });
   };
-
+  
   return (
     <div className="delete-container">
       {isActive ? (
@@ -67,12 +70,12 @@ export default function DeleteTodo({
                 {todo.completed ? (
                   <FaRegCheckCircle
                     className="circle-icon"
-                    onClick={() => updateTodo(todo._id, null, false)}
+                    onClick={() => updateTodo(todo._id, todo.important, false)}
                   />
                 ) : (
                   <FaRegCircle
                     className="circle-icon"
-                    onClick={() => updateTodo(todo._id, null, true)}
+                    onClick={() => updateTodo(todo._id, todo.important, true)}
                   />
                 )}
               </div>
@@ -117,7 +120,12 @@ export default function DeleteTodo({
               <FaAngleDoubleLeft />
             </button>
             <button className="delete-btn">
-              <MdDeleteOutline onClick={() => deleteTodo(todo._id)} />
+              <MdDeleteOutline
+                onClick={() => {
+                  deleteTodo(todo._id);
+                  isNot();
+                }}
+              />
             </button>
           </div>
         </div>
