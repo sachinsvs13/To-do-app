@@ -1,4 +1,4 @@
-const Todo = require("../Models/schema.js");
+const Todo = require("../Models/todo.js");
 
 const getTodos = async (req, res) => {
   // Logic to get all to-dos
