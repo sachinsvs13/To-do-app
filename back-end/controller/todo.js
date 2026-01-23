@@ -4,7 +4,7 @@ const getTodos = async (req, res) => {
   // Logic to get all to-dos
   try {
     const todo = await Todo.find({});
-    res.status(200).json({ todo });
+    res.status(200).json({ todo,total : todo.length });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
