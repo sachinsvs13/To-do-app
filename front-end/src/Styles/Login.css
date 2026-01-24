@@ -1,0 +1,111 @@
+.login-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  color: #474747;
+  width: 300px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.login {
+  padding: 0px 15px;
+}
+
+.login h1 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.form-container {
+  padding: 10px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-lb {
+  padding: 5px 0px;
+}
+
+.form-input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #eee;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
+}
+
+.form-input:focus {
+  outline: none;
+  border: 1px solid #0086b8;
+  box-shadow: 0px 0px 5px 0px rgba(0, 134, 184, 0.5);
+}
+
+.login-btn {
+  border: none;
+  border-radius: 5px;
+  background-color: #0086b8;
+  padding: 10px 17px;
+  font-weight: 600;
+  margin: 10px 0px;
+  color: rgb(217, 217, 217);
+}
+
+.login-btn:hover {
+  background-color: #006e96;
+  cursor: pointer;
+}
+
+.register-tag {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.message {
+  color: red;
+  font-style: italic;
+}
+
+.register-link,
+.login-link {
+  color: rgb(17, 0, 255);
+}
+
+.register-link:hover,
+.login-link:hover {
+  color: rgb(13, 0, 202);
+}
+
+.google-container {
+  display: flex;
+  justify-content: center;
+  padding: 0px 0px 10px;
+}
+
+.google-icon {
+  padding: 0px 5px;
+}
+
+.google-btn {
+  color: rgb(217, 217, 217);
+  background-color: rgb(0, 0, 88);
+  display: flex;
+  justify-content: center;
+  padding: 7px 50px;
+  font-weight: 600;
+  border: none;
+}
+
+.google-btn:hover {
+  background-color: rgb(0, 0, 134);
+  cursor: pointer;
+}
+
+.rights {
+  display: flex;
+  color: gray;
+  justify-content: center;
+  font-size: 12px;
+}

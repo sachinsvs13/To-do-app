@@ -27,7 +27,14 @@ const userRegister = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
 };
 
+const showAllUsers = async (req, res) => {
+  const user = await User.find({});
+  // const token = user.createJWT();
+  res.status(StatusCodes.OK).json({ user });
+};
+
 module.exports = {
   userLogin,
   userRegister,
+  showAllUsers,
 };

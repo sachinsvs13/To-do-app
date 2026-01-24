@@ -3,6 +3,8 @@ import App from "../App";
 import Important from "../Pages/important";
 import Planned from "../Pages/Planned";
 import Tasks from "../Pages/Tasks";
+import Login from "../Pages/Login";
+import Register from "../Pages/Register";
 
 
 const router = createBrowserRouter([
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
     path: "/tasks",
     element: <Tasks />,
   },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  }
 
 ]);
 

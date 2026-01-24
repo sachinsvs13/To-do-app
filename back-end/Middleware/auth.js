@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const Todo = require("../Models/todo.js");
 const { UnAuthenticatedError } = require("../Errors");
 
 const auth = async (req, res, next) => {

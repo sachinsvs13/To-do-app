@@ -1,68 +1,64 @@
 const Todo = require("../Models/todo.js");
+const { StatusCodes } = require("http-status-codes");
+const { BadRequestError, NotFoundError } = require("../Errors");
 
 const getTodos = async (req, res) => {
-  // Logic to get all to-dos
-  try {
-    const todo = await Todo.find({});
-    res.status(200).json({ todo,total : todo.length });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  const todo = await Todo.find({ createdBy: req.user.userId }).sort(
+    "createdAt",
+  );
+  res.status(StatusCodes.OK).json({ todo, total: todo.length });
 };
 
 const getTodoById = async (req, res) => {
-  // Logic to get a to-do by ID
-  try {
-    const { id: todoId } = req.params;
-    const todo = await Todo.findOne({ _id: todoId });
-    if (!todo) {
-      return res.status(404).json({ msg: `No task with id : ${todoId}` });
-    }
-    res.status(200).json({ todo });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  const {
+    user: { userId },
+    params: { id: todoId },
+  } = req;
+  const todo = await Todo.findOne({
+    _id: todoId,
+    createdBy: userId,
+  });
+  if (!todo) {
+    throw new NotFoundError(`No task with id ${todoId}`);
   }
+  res.status(StatusCodes.OK).json({ todo });
 };
 
 const createTodo = async (req, res) => {
-  // Logic to create a new to-do
-  try {
-    const todo = await Todo.create(req.body);
-    res.status(201).json({ todo });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  req.body.createdBy = req.user.userId;
+  const todo = await Todo.create(req.body);
+  res.status(StatusCodes.CREATED).json({ todo });
 };
 
 const updateTodo = async (req, res) => {
-  // Logic to update an existing to-do
-  try {
-    const { id: todoID } = req.params;
-    const todo = await Todo.findOneAndUpdate({ _id: todoID }, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    if (!todo) {
-      res.status(404).json({ msg: `No task with id : ${todoID}` });
-    }
-    res.status(200).json({ todo });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  const {
+    user: { userId },
+    params: { id: todoId },
+  } = req;
+  const todo = await Todo.findByIdAndUpdate(
+    { _id: todoId, createdBy: userId },
+    req.body,
+    { new: true, runValidators: true },
+  );
+  if (!todo) {
+    throw new NotFoundError(`No task with id ${todoId}`);
   }
+  res.status(StatusCodes.OK).json({ todo });
 };
 
 const deleteTodo = async (req, res) => {
-  // Logic to delete a to-do
-  try {
-    const { id: todoId } = req.params;
-    const todo = await Todo.findOneAndDelete({ _id: todoId });
-    if (!todo) {
-      return res.status(404).json({ msg: `No task with id : ${todoId}` });
-    }
-    res.status(200).json({ todo });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  const {
+    user: { userId },
+    params: { id: todoId },
+  } = req;
+  const todo = await Todo.findByIdAndRemove({
+    _id: todoId,
+    createdBy: userId,
+  });
+  if (!todo) {
+    throw new NotFoundError(`No task with id ${todoId}`);
   }
+  res.status(StatusCodes.OK).json({ todo });
 };
 
 module.exports = {
