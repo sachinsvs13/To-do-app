@@ -6,10 +6,10 @@ import { useState } from "react";
 import "../Styles/Header.css";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
-
 export default function Header() {
   const [lightDarkMode, setLightDarkMode] = useState(true);
-  const [userLogin, setUserLogin] = useState(false);
+  const [logOut, setLogOut] = useState(false);
+  const token = localStorage.getItem("token");
 
   const handleSwitch = (para) => {
     para((prev) => !prev);
@@ -24,24 +24,58 @@ export default function Header() {
       </div>
       <div className="light-dark-mode">
         {lightDarkMode ? (
-          <CiLight onClick={() => handleSwitch(setLightDarkMode)} />
+          <div>
+            <CiLight onClick={() => handleSwitch(setLightDarkMode)} />
+          </div>
         ) : (
           <MdDarkMode onClick={() => handleSwitch(setLightDarkMode)} />
         )}
-        {userLogin ? (
-          <Link to="/login" className="user-link">
-            <FaUserCircle
-              className="user-icon"
-              onClick={() => handleSwitch(setUserLogin)}
-            />
-          </Link>
+      </div>
+      <div className="user-flex">
+        {token ? (
+          <>
+            <div className="user-container">
+              <Link className="user-icon">
+                <FaUserCircle
+                  className="user-icon"
+                  onClick={() => handleSwitch(setLogOut)}
+                />
+              </Link>
+              <span
+                className="user-name"
+                onClick={() => handleSwitch(setLogOut)}
+              >
+                sachin
+              </span>
+            </div>
+            <div>
+              {logOut ? (
+                <div className="logout-model">
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem("token");
+                      setLogOut(false);
+                      window.location.reload();
+                    }}
+                    className="logout-buttons"
+                  >
+                    Log Out
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          </>
         ) : (
-          <Link to="/login" className="user-link">
-            <FaRegUserCircle
-              className="user-icon"
-              onClick={() => handleSwitch(setUserLogin)}
-            />
-          </Link>
+          <>
+            <div className="user-container">
+              <Link to="/login" className="user-icon">
+                <FaRegUserCircle className="user-icon" />
+              </Link>
+              <Link to="/login" style={{textDecoration : 'none'}}>
+                <span className="user-name" >Login</span>
+              </Link>
+            </div>
+          </>
         )}
       </div>
     </header>

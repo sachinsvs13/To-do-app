@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
 
@@ -10,28 +10,30 @@ export default function Register() {
     email: "",
     password: "",
   });
+  const nav = useNavigate();
 
-  const handleCreateUser = (e) => {
-    e.preventDefault();
-    const {data} = axios
-      .post("http://localhost:3000/api/v1/auth/register", {
-        name: createTodo.name,
-        email: createTodo.email,
-        password: createTodo.password,
-      })
-      .then(() => {
-        setCreateTodo({
-          name: "",
-          email: "",
-          password: "",
-        });
-      })
-      .then((console.log(data)))
-      .catch((err) => {
-        setMessage(err.response.data.msg);
-      });
+  const use = () => {
+    setTimeout(() => {
+      nav("/");
+    }, 3000);
   };
-  
+
+  const handleCreateUser = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3000/api/v1/auth/register",
+        {
+          name: createTodo.name,
+          email: createTodo.email,
+          password: createTodo.password,
+        },
+      );
+      localStorage.setItem("token", data.token);
+    } catch (error) {
+      setMessage(error);
+    }
+  };
 
   return (
     <div className="login-flex">
@@ -85,7 +87,7 @@ export default function Register() {
               <p className="message">Please enter valid email and password</p>
             )}
             <div>
-              <button className="login-btn">Register</button>
+              <button className="login-btn" onClick={() => use()}>Register</button>
             </div>
           </form>
           <p className="register-tag">

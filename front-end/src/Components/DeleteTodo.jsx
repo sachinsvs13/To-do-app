@@ -19,6 +19,7 @@ export default function DeleteTodo({
   ShowAllToDo,
 }) {
   const [todo, setTodo] = useState([]);
+  const token = localStorage.getItem("token");
 
   const handleNameChange = (e) => {
     setTodo({ ...todo, name: e.target.value });
@@ -27,7 +28,11 @@ export default function DeleteTodo({
   const idTodo = id;
   const fetchTodo = (id) => {
     axios
-    .get(`http://localhost:3000/api/v1/todo/${id}`)
+    .get(`http://localhost:3000/api/v1/todo/${id}`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     .then((res) => {
       setTodo(res.data.todo);
     })
@@ -43,6 +48,10 @@ export default function DeleteTodo({
       name: todo.name,
       completed: item1,
       important: item,
+    },{
+      headers: {
+        Authorization : `Bearer ${token}`,
+      }
     })
     .then(() => fetchTodo(idTodo))
     .then(() => ShowAllToDo())
@@ -52,7 +61,11 @@ export default function DeleteTodo({
   };
   const deleteTodo = (id) => {
     axios
-    .delete(`http://localhost:3000/api/v1/todo/${id}`)
+    .delete(`http://localhost:3000/api/v1/todo/${id}`,{
+      headers: {
+        Authorization : `Bearer ${token}`,
+      }
+    })
     .then(() => fetchTodo(idTodo))
     .then(() => ShowAllToDo())
     .catch((err) => {
@@ -63,7 +76,7 @@ export default function DeleteTodo({
   return (
     <div className="delete-container">
       {isActive ? (
-        <div className="container">
+        <div className="cont">
           <div className="todo-list-container">
             <div className="todo-list">
               <div>

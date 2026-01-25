@@ -17,7 +17,6 @@ import DeleteTodo from "../Components/DeleteTodo";
 import TodoFunctions from "../Components/todoFunctions";
 
 export default function Main({ settingColor }) {
-
   const [allTodo, setAllTodo] = useState([]);
   const [createTodo, setCreateTodo] = useState("");
   const [id, setId] = useState("");
@@ -25,41 +24,50 @@ export default function Main({ settingColor }) {
   const [isGrid, setIsGrid] = useState(false);
   const [todo, setTodo] = useState([]);
 
-
-  console.log(allTodo);
+  const token = localStorage.getItem("token");
 
   const ShowAllToDo = () => {
     axios
-      .get("http://localhost:3000/api/v1/todo")
+      .get("http://localhost:3000/api/v1/todo", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => setAllTodo(res.data.todo))
       .catch((err) => console.log(err));
   };
-  
+
   useEffect(() => {
     ShowAllToDo();
   }, []);
 
   const fetchTodo = (id) => {
     axios
-    .get(`http://localhost:3000/api/v1/todo/${id}`)
-    .then((res) => {
-      setTodo(res.data.todo);
-    })
-    .catch((err) => console.error(err.message));
+      .get(`http://localhost:3000/api/v1/todo/${id}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setTodo(res.data.todo);
+      })
+      .catch((err) => console.error(err.message));
   };
   useEffect(() => {
     fetchTodo(id);
   }, [id]);
 
   console.log(todo);
-  
-  
 
   const handleCreateTodo = (e) => {
     e.preventDefault();
     axios
       .post("http://localhost:3000/api/v1/todo", {
         name: createTodo,
+      },{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
       .then(() => {
         setCreateTodo("");
@@ -76,9 +84,13 @@ export default function Main({ settingColor }) {
       .patch(`http://localhost:3000/api/v1/todo/${id}`, {
         important: item,
         completed: item1,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
       .then(() => {
-          ShowAllToDo();
+        ShowAllToDo();
       })
       .then(() => fetchTodo(id))
       .catch((err) => {
@@ -291,7 +303,7 @@ export default function Main({ settingColor }) {
         isActive={isActive}
         handleToggleActive={handleToggleActive}
         isNot={() => setIsActive(false)}
-        ShowAllToDo = {ShowAllToDo}
+        ShowAllToDo={ShowAllToDo}
         handleImportantChange={handleImportantChange}
       />
     </>

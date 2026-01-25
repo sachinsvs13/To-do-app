@@ -51,7 +51,7 @@ const deleteTodo = async (req, res) => {
     user: { userId },
     params: { id: todoId },
   } = req;
-  const todo = await Todo.findByIdAndRemove({
+  const todo = await Todo.findByIdAndDelete({
     _id: todoId,
     createdBy: userId,
   });

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import {useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import "../Styles/Login.css";
 import axios from "axios";
@@ -10,6 +10,13 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const nav = useNavigate();
+
+  const use = () => {
+    setTimeout(() => {
+      nav("/");
+    }, 3000);
+  };
 
   const handleLoginUser = async (e) => {
     e.preventDefault();
@@ -23,7 +30,7 @@ export default function Login() {
       );
       localStorage.setItem("token", data.token);
     } catch (error) {
-      console.error(error);
+      setMessage(error);
     }
   };
 
@@ -65,7 +72,9 @@ export default function Login() {
               <p className="message">Please enter valid email and password</p>
             )}
             <div>
-              <button className="login-btn">Login</button>
+              <button className="login-btn" onClick={() => use()}>
+                Login
+              </button>
             </div>
           </form>
           <p className="register-tag">
