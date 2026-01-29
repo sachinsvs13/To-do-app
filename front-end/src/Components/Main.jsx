@@ -26,13 +26,17 @@ export default function Main({ settingColor }) {
 
   const token = localStorage.getItem("token");
 
+  const config = {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   const ShowAllToDo = () => {
     axios
-      .get("http://localhost:3000/api/v1/todo", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get("http://localhost:3000/api/v1/todo", config)
       .then((res) => setAllTodo(res.data.todo))
       .catch((err) => console.log(err));
   };
@@ -43,11 +47,7 @@ export default function Main({ settingColor }) {
 
   const fetchTodo = (id) => {
     axios
-      .get(`http://localhost:3000/api/v1/todo/${id}`,{
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(`http://localhost:3000/api/v1/todo/${id}`, config)
       .then((res) => {
         setTodo(res.data.todo);
       })
@@ -55,20 +55,20 @@ export default function Main({ settingColor }) {
   };
   useEffect(() => {
     fetchTodo(id);
-  }, [id]);
+  }, []);
 
   console.log(todo);
 
   const handleCreateTodo = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3000/api/v1/todo", {
-        name: createTodo,
-      },{
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .post(
+        "http://localhost:3000/api/v1/todo",
+        {
+          name: createTodo,
         },
-      })
+        config,
+      )
       .then(() => {
         setCreateTodo("");
         ShowAllToDo();
@@ -81,14 +81,14 @@ export default function Main({ settingColor }) {
 
   const handleImportantChange = (id, item, item1) => {
     axios
-      .patch(`http://localhost:3000/api/v1/todo/${id}`, {
-        important: item,
-        completed: item1,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .patch(
+        `http://localhost:3000/api/v1/todo/${id}`,
+        {
+          important: item,
+          completed: item1,
         },
-      })
+        config,
+      )
       .then(() => {
         ShowAllToDo();
       })

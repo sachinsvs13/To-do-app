@@ -25,54 +25,54 @@ export default function DeleteTodo({
     setTodo({ ...todo, name: e.target.value });
   };
 
+  const config = {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   const idTodo = id;
   const fetchTodo = (id) => {
     axios
-    .get(`http://localhost:3000/api/v1/todo/${id}`,{
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => {
-      setTodo(res.data.todo);
-    })
-    .catch((err) => console.error(err.message));
+      .get(`http://localhost:3000/api/v1/todo/${id}`, config)
+      .then((res) => {
+        setTodo(res.data.todo);
+      })
+      .catch((err) => console.error(err.message));
   };
   useEffect(() => {
     fetchTodo(idTodo);
   }, [idTodo]);
-  
+
   const updateTodo = (id, item, item1) => {
     axios
-    .patch(`http://localhost:3000/api/v1/todo/${id}`, {
-      name: todo.name,
-      completed: item1,
-      important: item,
-    },{
-      headers: {
-        Authorization : `Bearer ${token}`,
-      }
-    })
-    .then(() => fetchTodo(idTodo))
-    .then(() => ShowAllToDo())
-    .catch((err) => {
-      console.error("There was an error updating the task!", err.message);
-    });
+      .patch(
+        `http://localhost:3000/api/v1/todo/${id}`,
+        {
+          name: todo.name,
+          completed: item1,
+          important: item,
+        },
+        config,
+      )
+      .then(() => fetchTodo(idTodo))
+      .then(() => ShowAllToDo())
+      .catch((err) => {
+        console.error("There was an error updating the task!", err.message);
+      });
   };
   const deleteTodo = (id) => {
     axios
-    .delete(`http://localhost:3000/api/v1/todo/${id}`,{
-      headers: {
-        Authorization : `Bearer ${token}`,
-      }
-    })
-    .then(() => fetchTodo(idTodo))
-    .then(() => ShowAllToDo())
-    .catch((err) => {
-      console.error("There was an error deleting the task!", err.message);
-    });
+      .delete(`http://localhost:3000/api/v1/todo/${id}`, config)
+      .then(() => fetchTodo(idTodo))
+      .then(() => ShowAllToDo())
+      .catch((err) => {
+        console.error("There was an error deleting the task!", err.message);
+      });
   };
-  
+
   return (
     <div className="delete-container">
       {isActive ? (
